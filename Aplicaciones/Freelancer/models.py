@@ -9,6 +9,7 @@ class Freelancer(models.Model):
     image =models.ImageField(upload_to='freelancer/images/')
     ubicacion = models.CharField(max_length=250)
     disponibilidad = models.CharField(max_length=250)
+    
 
 
 
