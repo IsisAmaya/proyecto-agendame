@@ -2,18 +2,135 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 
-<div class="container">
- 
-<form action= "">
-    <div class="mb-3">
-        <label for="searchFreelancer" class="form-label">
-            Search for Freelancer: 
-        </label>
-        <input type="text" class="form-control" name="searchFreelancer" />
-    </div>
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
-<p>Searching for {{ searchTerm }}</p>
+
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" >
+        <div class="container-fluid" >
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-2">
+            <li class="nav-item me-3 mb-2 mb-lg-1">
+                <button type="button" class="btn btn-outline-primary">Long in</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-outline-primary">Sing up</button>
+            </li>
+            </ul>
+            <form class="d-flex" role="search">
+            <input type="text" class="form-control me-2"  name="searchFreelancer" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+        </div>
+    </nav>
+
+
+</body>
+
+
+
+<div class="container-fluid">
+
+    <div class="row flex-nowrap">
+
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #dfe9f5;">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <h1 style="color: black; font-size: larger;">
+                    Categorias
+                </h1>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Pintura
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Peluqueria
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Plomeria
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Barberia
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Cerrajeria
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Limpieza
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Paseadores
+                        </label>
+                    </div>
+                    <hr>
+                    <h2 style="color: black; font-size: larger;">
+                        Ubicacion
+                    </h2>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Medellin
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Envigado
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Estrella
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: black;">
+                            Sabaneta
+                        </label>
+                    </div>
+                </ul>
+                <hr>
+            </div>
+        </div>
+    
+
+        <div class="col py-3">
+
+            <ul class="nav justify-content-left">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Servicios</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Quiero trabajar</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Quiero contratar</a>
+                </li>
+            </ul>
+
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for freelancer in freelancers %}
     <div v-for="freelancer in freelancers" class=col>
@@ -41,7 +158,11 @@
 
 
 
+</div>
 
+</div>
+
+</div>
 
 
 </div>
