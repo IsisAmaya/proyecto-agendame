@@ -4,7 +4,7 @@ Proyecto de desarrollo web para el curso de Proyecto Integrador 1 Universidad EA
 ## Content this file
 1. [General Info](#general-info)
 2. [Requirements](#requirements)
-3. [Intructions](#Intructions)
+3. [Installation](#Installation)
 
 ## General Info
 
@@ -12,21 +12,23 @@ Proyecto de desarrollo web para el curso de Proyecto Integrador 1 Universidad EA
 
 The following technologies and libraries are necessary for the execution of Agendame:
 
-[Python](https://www.python.org/downloads/) 
+* [Python](https://www.python.org/downloads/) 
 
-[Django](https://www.djangoproject.com/)
+* [Django](https://www.djangoproject.com/)
+  
 In the system console run the following command:
 
 `python -m pip install django`
 
-[Pillow](https://pypi.org/project/Pillow/)
+* [Pillow](https://pypi.org/project/Pillow/)
+  
 In the system console run the following command:
 
 `python -m pip install Pillow`
 
-[Visual Studio Code](https://code.visualstudio.com/)
+* [Visual Studio Code](https://code.visualstudio.com/)
 
-[Git](https://git-scm.com/downloads)
+* [Git](https://git-scm.com/downloads)
 
 
 ## Installation 
@@ -38,7 +40,7 @@ In the system console run the following command:
 
    `python manage.py runserver`
 
-3. Listo el proyecto esta corriendo en: [](http://localhost:8000/)
+3. Listo el proyecto esta corriendo en: [http://localhost:8000/](http://localhost:8000/)
 
 
 
