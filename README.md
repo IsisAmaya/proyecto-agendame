@@ -6,9 +6,9 @@ Proyecto de desarrollo web para el curso de Proyecto Integrador 1 Universidad EA
 2. [Requirements](#requirements)
 3. [Installation](#Installation)
 
-## General Info
+## :mortar_board: General Info
 
-## Requirements
+## :wrench: Requirements
 
 The following technologies and libraries are necessary for the execution of Agendame:
 
@@ -31,14 +31,17 @@ In the system console run the following command:
 * [Git](https://git-scm.com/downloads)
 
 
-## Installation 
+## :rocket: Installation 
 1. Abrir la terminal del sistema y clonar el repositorio
 
    `git clone https://github.com/IsisAmaya/proyecto-agendame.git`
 
-2. En la carpeta del proyecto ejecutar el siguiente comando
+2. En la carpeta del proyecto ejecutar los siguientes comandos
 
-   `python manage.py runserver`
+```
+ git checkout development
+ python manage.py runserver
+```
 
 3. Listo el proyecto esta corriendo en: [http://localhost:8000/](http://localhost:8000/)
 
