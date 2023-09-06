@@ -1,4 +1,4 @@
-# proyecto-agendame
+# project-agendame
 
 ## Content this file
 1. [General Info](#general-info)
