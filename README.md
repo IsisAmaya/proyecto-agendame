@@ -28,13 +28,13 @@ The following technologies and libraries are necessary for the execution of Agen
 
 
 ## :rocket: Installation 
-1. Abrir la terminal del sistema y clonar el repositorio
+1. Open the system terminal and clone the repository
 
 ```
 git clone https://github.com/IsisAmaya/proyecto-agendame.git
 
 ```
-2. En la carpeta del proyecto ejecutar los siguientes comandos
+2. In the system terminal and located in the project folder execute the following command
 
 ```
  git checkout development
@@ -42,7 +42,7 @@ git clone https://github.com/IsisAmaya/proyecto-agendame.git
 
 ```
 
-3. Listo el proyecto esta corriendo en: [http://localhost:8000/](http://localhost:8000/)
+3. Done, the project is running on: [http://localhost:8000/](http://localhost:8000/)
 
 
 
