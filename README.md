@@ -1,5 +1,4 @@
 # proyecto-agendame
-Proyecto de desarrollo web para el curso de Proyecto Integrador 1 Universidad EAFIT 2023 - 2
 
 ## Content this file
 1. [General Info](#general-info)
@@ -7,6 +6,7 @@ Proyecto de desarrollo web para el curso de Proyecto Integrador 1 Universidad EA
 3. [Installation](#Installation)
 
 ## :mortar_board: General Info
+Web development project for the Integrator Project course 1 EAFIT University 2023 - 2
 
 ## :wrench: Requirements
 
@@ -14,15 +14,11 @@ The following technologies and libraries are necessary for the execution of Agen
 
 * [Python](https://www.python.org/downloads/) 
 
-* [Django](https://www.djangoproject.com/)
-  
-In the system console run the following command:
+* [Django](https://www.djangoproject.com/): In the system console run the following command:
 
 `python -m pip install django`
 
-* [Pillow](https://pypi.org/project/Pillow/)
-  
-In the system console run the following command:
+* [Pillow](https://pypi.org/project/Pillow/): In the system console run the following command:
 
 `python -m pip install Pillow`
 
@@ -34,13 +30,16 @@ In the system console run the following command:
 ## :rocket: Installation 
 1. Abrir la terminal del sistema y clonar el repositorio
 
-   `git clone https://github.com/IsisAmaya/proyecto-agendame.git`
+```
+git clone https://github.com/IsisAmaya/proyecto-agendame.git
 
+```
 2. En la carpeta del proyecto ejecutar los siguientes comandos
 
 ```
  git checkout development
  python manage.py runserver
+
 ```
 
 3. Listo el proyecto esta corriendo en: [http://localhost:8000/](http://localhost:8000/)
