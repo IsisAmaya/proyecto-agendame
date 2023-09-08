@@ -15,6 +15,7 @@ from django.http import HttpResponse
 from .models import Freelancer
 from .models import Schedule
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -25,6 +26,9 @@ def home(request):
     else:
         freelancers = Freelancer.objects.all()
     return render(request, 'home.html', {'searchTerm':searchTerm, 'freelancers' :freelancers})
+
+def sign_up(request):
+    return render(request, 'sign_up.html')
 
 def calendar(request):
     all_events = Schedule.objects.all()
@@ -43,7 +47,7 @@ def all_events(request):
             'start': event.starttme.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
             'end': event.endtime.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
         })                                                                                                               
-                                                                                                                     
+
     return JsonResponse(out, safe=False)  
 
 def add_event(request):
