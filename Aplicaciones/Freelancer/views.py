@@ -12,11 +12,15 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Freelancer
+from .models import Freelancer, User
 from .models import Schedule
 from django.http import JsonResponse
+from . forms import freelancerRegistrationForm, CustomUserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import Group
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from .models import Freelancer
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
 
 
@@ -29,8 +33,65 @@ def home(request):
         freelancers = Freelancer.objects.all()
     return render(request, 'home.html', {'searchTerm':searchTerm, 'freelancers' :freelancers})
 
-def sign_up(request):
-    return render(request, 'sign_up.html')
+
+
+def registration_step1(request):
+    if request.method == 'GET':
+        return render(request, 'step1.html',
+            {'form': CustomUserCreationForm})
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                
+                freelancers_group = Group.objects.get(name='Freelancers')
+                user.groups.add(freelancers_group)
+                
+                user.save()
+                login(request, user)
+                request.session['user_id'] = user.id
+                return redirect('registration_step2')
+            except IntegrityError:
+                return render(request, 'step1.html',
+                {'form':CustomUserCreationForm,
+                'error':'Username already taken. Choose new username.'})
+        else:
+            return render(request, 'step1.html',
+            {'form':CustomUserCreationForm, 'error':'Passwords do not match'})
+
+
+
+
+def registration_step2(request):
+    
+    user_id = request.session["user_id"]
+    
+    if not user_id:
+        return redirect('registration_step1')
+    
+    user = User.objects.get(id=user_id)
+
+    if request.method == 'POST':
+        form = freelancerRegistrationForm(request.POST)
+        if form.is_valid():
+            freelancer_form = form.save(commit=False)
+            freelancer_form.idfreelancer = user
+            freelancer_form.imageprofile = 'agendameproject\static\images\default-avatar-profile.jpg'
+            freelancer_form.imagejobs = 'agendameproject\static\images\default-image-5-1.jpg'
+            freelancer_form.address = 'The freelancer have not a address'
+            freelancer_form.save()
+            return redirect('registration_complete')
+    else:
+        form = freelancerRegistrationForm()
+
+    return render(request, 'step2.html', {'form': form})
+
+
+
+def registration_complete(request):
+    return render(request, "confirmation.html")
+
+
 
 def calendar(request):
     all_events = Schedule.objects.all()

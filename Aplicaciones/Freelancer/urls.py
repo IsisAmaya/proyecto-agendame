@@ -3,7 +3,9 @@ from . import views
 
 
 urlpatterns = [
-    path('sign-up/', views.sign_up, name="sign_up"),
+    path('register/step1/', views.registration_step1, name='registration_step1'),
+    path('register/step2/', views.registration_step2, name='registration_step2'),
+    path('register/complete/', views.registration_complete, name="registration_complete"),
     path('calendarioFreelancer/', views.calendar, name="calendar"),
     path('<int:freelancer_id>', views.detail, name='detail'),
     path('filter/<str:categoria>/', views.filter_category,name='filter_services'),

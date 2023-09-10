@@ -6,29 +6,43 @@ from django.contrib.auth.models import User
 class Country(models.Model):
     idcountry = models.AutoField(primary_key=True)
     namecounty= models.CharField(max_length=250)
- 
+    
+    def __str__(self) -> str:
+        return self.namecounty
+
+
 class City(models.Model):
     idcity = models.AutoField(primary_key=True)
     namecity= models.CharField(max_length=250)
     idcountry = models.ForeignKey(Country, on_delete=models.CASCADE)
+    def __str__(self) -> str:
+        return self.namecity
 
 class Neighborhood(models.Model):
     idneighborhood = models.AutoField(primary_key=True)
     nameneighborhood= models.CharField(max_length=250)
     idcity = models.ForeignKey(City, on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return self.nameneighborhood
+
 
 class Services(models.Model):
     idservices= models.AutoField(primary_key=True)
     name= models.CharField(max_length=250)
+    def __str__(self) -> str:
+        return self.name
 
-class User(models.Model):
+
+""" class User(models.Model):
     iduser= models.AutoField(primary_key=True)
     typeuser=models.IntegerField()
     email = models.CharField(max_length=250)
-    password = models.CharField(max_length=250)
- 
+    password = models.CharField(max_length=250) """
+
+
 class Freelancer(models.Model):
-    idfreelancer = models.ForeignKey(User, on_delete=models.CASCADE)
+    idfreelancer = models.OneToOneField(User, on_delete=models.CASCADE)
     idcard = models.IntegerField()
     name=models.CharField(max_length=250)
     lastname = models.CharField(max_length=250)
