@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Aplicaciones.Freelancer import views as freelancerviews
+from Aplicaciones.Customer import views as customerViews
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -27,6 +28,7 @@ urlpatterns = [
     path('', freelancerviews.home),
     path('accounts/', include('django.contrib.auth.urls')),
     path('freelancer/', include('Aplicaciones.Freelancer.urls')),
+    path('customer/', include('Aplicaciones.Customer.urls')),
 ]
 
 

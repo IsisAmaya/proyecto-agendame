@@ -16,6 +16,8 @@ from .models import Freelancer
 from .models import Schedule
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from .models import Freelancer
+from django.shortcuts import get_object_or_404, redirect
 
 
 def home(request):
@@ -80,5 +82,15 @@ def remove(request):
     event.delete()
     data = {}
     return JsonResponse(data)
+
+def detail(request, freelancer_id):
+    freelancer = get_object_or_404(Freelancer,pk=freelancer_id)
+    return render(request, 'detail.html',{'freelancer':freelancer })
+
+
+def filter_category(request, category):
+    filter_category = Freelancer.objects.filter(category=category)
+    return render(request, 'home.html', {'filter_services': filter_category})
+
 
 
