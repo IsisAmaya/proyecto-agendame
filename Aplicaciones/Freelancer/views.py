@@ -15,7 +15,7 @@ from django.http import HttpResponse
 from .models import Freelancer, User
 from .models import Schedule
 from django.http import JsonResponse
-from . forms import freelancerRegistrationForm, CustomUserCreationForm
+from . forms import freelancerRegistrationForm, CustomUserCreationForm, freelancerEditForm, userEditForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
 from django.contrib.auth import login, logout, authenticate
@@ -76,8 +76,6 @@ def registration_step2(request):
         if form.is_valid():
             freelancer_form = form.save(commit=False)
             freelancer_form.idfreelancer = user
-            freelancer_form.imageprofile = 'agendameproject\static\images\default-avatar-profile.jpg'
-            freelancer_form.imagejobs = 'agendameproject\static\images\default-image-5-1.jpg'
             freelancer_form.address = 'The freelancer have not a address'
             freelancer_form.save()
             return redirect('registration_complete')
@@ -92,6 +90,41 @@ def registration_complete(request):
     return render(request, "confirmation.html")
 
 
+def login_freelancer(request):
+    if request.method == 'GET':
+        return render(request, 'login.html',{'form':AuthenticationForm})
+    else:
+        user = authenticate(request, username=request.POST['username'],password=request.POST['password'])
+    if user is None:
+        return render(request,'login.html',{'form': AuthenticationForm(),'error': 'username and password do not match'})
+    else:
+        login(request, user)
+    return redirect('profile')
+
+@login_required
+def logout_freelancer(request):
+    logout(request)
+    return redirect('home')
+
+@login_required
+def profile(request):
+    return render(request, "perfil.html")
+
+@login_required
+def edit_profile(request):
+    user_id = request.user.id
+    freelancer = User.objects.filter(id=user_id).first()
+    form = freelancerEditForm(instance=freelancer)
+    return render(request, 'edit-profile.html', {"form":form, 'freelancer': freelancer})
+
+def update_profile(request):
+    freelancer = request.user.freelancer
+    
+    form = freelancerEditForm(request.POST, instance=freelancer)
+    if form.is_valid():
+        form.save()
+        
+    return render (request, "perfil.html")
 
 def calendar(request):
     all_events = Schedule.objects.all()

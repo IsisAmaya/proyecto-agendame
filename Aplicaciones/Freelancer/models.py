@@ -52,8 +52,8 @@ class Freelancer(models.Model):
     idcity = models.ForeignKey(City, on_delete=models.CASCADE)
     idneighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
     address = models.CharField(max_length=300)
-    imageprofile =models.ImageField(upload_to='freelancer/images/')
-    imagejobs =models.ImageField(upload_to='freelancer/images/')
+    imageprofile =models.ImageField(upload_to='freelancer/images/', default= 'freelancer/images/default-avatar-profile.jpg')
+    imagejobs =models.ImageField(upload_to='freelancer/images/', default="freelancer/images/default-image-5-1.jpg")
     idservices = models.ForeignKey(Services, on_delete=models.CASCADE)
 
 class Customer(models.Model):

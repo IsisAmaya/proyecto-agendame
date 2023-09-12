@@ -1,10 +1,10 @@
 from django import forms
 from . models import *
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class CustomUserCreationForm(UserCreationForm):
     pass
-
 
 
 
@@ -44,3 +44,24 @@ class freelancerRegistrationForm(forms.ModelForm):
             'idservices',
         ]
 
+
+
+class userEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'username',
+            'password',
+        ]
+
+
+class freelancerEditForm(forms.ModelForm):
+    class Meta:
+        model = Freelancer
+        fields = [
+                'name',
+                'phone',
+                'idcountry',
+                'idservices',
+                ]

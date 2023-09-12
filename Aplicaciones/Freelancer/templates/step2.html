@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 {% load static %}
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
             background-image: url('{% static "images/bg.jpeg" %}');
             background-size: cover;
             background-repeat: no-repeat;
-        }
+            }
 
     </style>
 
@@ -22,28 +23,45 @@
 
         <div class="row">
 
-            <div class="col-6">
-
-                <p class="card-text">
-                    
-                <form class="row g-3" method="POST">
-                    {% csrf_token %}
-
-                    {{ form.as_p }}
+            <div class="col-md-5 mx-auto">
 
 
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <button class="btn btn-info" type="submit" style="background-color= #97D2FB;">Registrarse</button>
+                <div class="card h-100">
+                    <div class="card-header">
+                    Completa tu informacion
                     </div>
-                    </form>
+                    <div class="card-body">
+                    <h5 class="card-title">Info Freelancer</h5>
+                    
+
+                    <p class="card-text">
+                    
+                        <form class="row g-3" method="POST">
+                            {% csrf_token %}
+        
+                            {{ form | crispy }}
+        
+        
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn btn-info" type="submit" style="background-color= #97D2FB;">Registrarse</button>
+                            </div>
+                            </form>
+        
+        
+                        </p>
+
+                    </div>
+                </div>
 
 
-                </p>
+
+                
+
 
 
             </div>
 
-            <div class="text-center col-6 my-5">
+            <div class="text-center col-4 my-auto">
 
                 <img class="img-fluid" src= "{% static "images/Logo Negativo Blanco.png" %}" alt="logo" style="width: 400px; height: auto;"/>
 
