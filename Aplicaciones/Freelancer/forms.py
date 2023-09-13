@@ -1,28 +1,100 @@
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 from django import forms
 from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Div, Field
+
 
 class CustomUserCreationForm(UserCreationForm):
-    pass
+    class Meta:
+            model = User
+            fields = [
+                'username',
+            ]
+            
+            labels = {
+            "username": ("Nombre de usuario"),
+        }
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        for fieldname in ['username', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
+            self.fields[fieldname].widget.attrs.update({'class': 'form-control'})
+        
+
+
+""" class userEditForm(forms.ModelForm):
+    email= forms.EmailField(required=False, label="Correo electronico")
+    username= forms.CharField(max_length=250, required=False, label="Nombre de usuario")
+    
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'username',
+        ]
+"""
+
+
+
+class freelancerEditForm(forms.ModelForm):
+    phone = forms.IntegerField(label="Numero de telefono", required=False)
+    idcity = forms.ModelMultipleChoiceField(queryset=City.objects.all(), label="Ciudades", widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}), required=False)
+    imageprofile = forms.ImageField(required=False, label="Imagen de perfil")
+    imagejobs = forms.ImageField(required=False, label = "Fotos de trabajos previos")
+    idservices = forms.ModelChoiceField(queryset=Service.objects.all(), label="Servicio ofrecido", required=False)
+    
+    
+    class Meta:
+        model = Freelancer
+        fields = [
+                'phone',
+                'idcity',
+                'imageprofile',
+                'imagejobs',
+                'idservices',
+                ]
+
+
+class ScheduleForm(forms.ModelForm):
+
+    class Meta:
+        model = Schedule
+        fields = {'date','startime','endtime'}
+        labels = {
+            "date": ("Fecha"),
+            "startime": ("HoraInicio"),
+            "endtime": ("HoraFin")
+        }
+        widgets = {
+            'date': forms.DateInput(
+                attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)', 'class': 'form-control'}
+            ),
+            'startime':forms.TimeInput(
+                attrs={'type': 'time', 'placeholder': 'H:M', 'class': 'form-control'}),
+            'endtime':forms.TimeInput(
+                attrs={'type': 'time', 'placeholder': 'H:M', 'class': 'form-control'}), 
+        }
 
 
 
 class freelancerRegistrationForm(forms.ModelForm):
     
-    idfreelancer = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-    idcard = forms.IntegerField()
-    name  = forms.CharField(max_length=250)
-    lastname = forms.CharField(max_length=250)
-    phone = forms.IntegerField()
-    birthday = forms.DateField()
-    idcountry = forms.ModelChoiceField(queryset=Country.objects.all())
-    idcity = forms.ModelChoiceField(queryset=City.objects.all())
-    idneighborhood = forms.ModelChoiceField(queryset=Neighborhood.objects.all())
-    imageprofile = forms.ImageField(widget=forms.HiddenInput(), required=False)
-    imagejobs = forms.ImageField(widget=forms.HiddenInput(), required=False)
+    idfreelancer = forms.IntegerField(widget=forms.HiddenInput(), required=False, label="User")
+    idcard = forms.IntegerField(label="Cedula")
+    name  = forms.CharField(max_length=250, label="Nombre")
+    lastname = forms.CharField(max_length=250, label="Apellidos")
+    phone = forms.IntegerField(label="Numero de telefono")
+    birthday = forms.DateField(label="Fecha de nacimiento", widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)', 'class': 'form-control'}))
+    idcountry = forms.ModelChoiceField(queryset=Country.objects.all() , label="Pais")
+    idcity = forms.ModelMultipleChoiceField(queryset=City.objects.all(), label="Ciudades", widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
+    idneighborhood = forms.ModelChoiceField(queryset=Neighborhood.objects.all(), required=False, widget=forms.HiddenInput())
+    imageprofile = forms.ImageField(required=False, label="Imagen de perfil")
+    imagejobs = forms.ImageField(required=False, label = "Fotos de trabajos previos")
     address =  forms.CharField(widget=forms.HiddenInput(), required=False)
-    idservices = forms.ModelChoiceField(queryset=Services.objects.all())
+    idservices = forms.ModelChoiceField(queryset=Service.objects.all(), label="Servicio ofrecido")
     
     
     
@@ -43,25 +115,3 @@ class freelancerRegistrationForm(forms.ModelForm):
             'address',
             'idservices',
         ]
-
-
-
-class userEditForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = [
-            'email',
-            'username',
-            'password',
-        ]
-
-
-class freelancerEditForm(forms.ModelForm):
-    class Meta:
-        model = Freelancer
-        fields = [
-                'name',
-                'phone',
-                'idcountry',
-                'idservices',
-                ]

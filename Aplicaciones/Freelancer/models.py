@@ -26,10 +26,11 @@ class Neighborhood(models.Model):
     def __str__(self) -> str:
         return self.nameneighborhood
 
-
-class Services(models.Model):
+class Service(models.Model):
     idservices= models.AutoField(primary_key=True)
     name= models.CharField(max_length=250)
+    description = models.CharField(max_length=900)
+    
     def __str__(self) -> str:
         return self.name
 
@@ -49,12 +50,12 @@ class Freelancer(models.Model):
     phone = models.IntegerField()
     birthday = models.DateField()
     idcountry = models.ForeignKey(Country, on_delete=models.CASCADE)
-    idcity = models.ForeignKey(City, on_delete=models.CASCADE)
+    idcity = models.ManyToManyField(City)
     idneighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
     address = models.CharField(max_length=300)
     imageprofile =models.ImageField(upload_to='freelancer/images/', default= 'freelancer/images/default-avatar-profile.jpg')
     imagejobs =models.ImageField(upload_to='freelancer/images/', default="freelancer/images/default-image-5-1.jpg")
-    idservices = models.ForeignKey(Services, on_delete=models.CASCADE)
+    idservices = models.ForeignKey(Service, on_delete=models.CASCADE)
 
 class Customer(models.Model):
     idcustomer = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -71,11 +72,11 @@ class Customer(models.Model):
 
 class Schedule(models.Model):
     idschedule= models.AutoField(primary_key=True)
-    title = models.CharField(max_length=250)
+    idfreelancer = models.IntegerField(default=0)
     date = models.DateField()
     startime = models.TimeField ()
     endtime = models.TimeField ()
-    state = models.IntegerField()
+    state = models.BooleanField(default=True)
 
 class Request(models.Model):
     idrequest = models.AutoField(primary_key=True)

@@ -11,7 +11,8 @@ urlpatterns = [
     path('profile/', views.profile, name="profile"),
     path('profile/edit/', views.edit_profile, name="edit_profile"),
     path('profile/update/', views.update_profile, name="update_profile"),
-    path('calendarioFreelancer/', views.calendar, name="calendar"),
+    path('calendarioFreelancer/', views.uploadschedule, name="uploadschedule"),
+    path('calendarioFreelancer/<int:idschedule>/delete', views.deleteShedule, name="deleteShedule"),
     path('<int:freelancer_id>', views.detail, name='detail'),
     path('filter/<str:categoria>/', views.filter_category,name='filter_services'),
 ]

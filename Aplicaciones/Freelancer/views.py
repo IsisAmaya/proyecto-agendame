@@ -12,14 +12,15 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Freelancer, User
+from .models import Freelancer, User, Schedule, Neighborhood
 from .models import Schedule
 from django.http import JsonResponse
-from . forms import freelancerRegistrationForm, CustomUserCreationForm, freelancerEditForm, userEditForm
+from . forms import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
 
@@ -54,16 +55,15 @@ def registration_step1(request):
             except IntegrityError:
                 return render(request, 'step1.html',
                 {'form':CustomUserCreationForm,
-                'error':'Username already taken. Choose new username.'})
+                'error':'Nombre de usuario tomado. Escoge un nuevo nombre de usuario'})
         else:
             return render(request, 'step1.html',
-            {'form':CustomUserCreationForm, 'error':'Passwords do not match'})
-
+            {'form':CustomUserCreationForm, 'error':'Las contraseñas no coinciden'})
 
 
 
 def registration_step2(request):
-    
+    neighborhood= Neighborhood.objects.get(pk=1)
     user_id = request.session["user_id"]
     
     if not user_id:
@@ -72,10 +72,12 @@ def registration_step2(request):
     user = User.objects.get(id=user_id)
 
     if request.method == 'POST':
+        
         form = freelancerRegistrationForm(request.POST)
         if form.is_valid():
             freelancer_form = form.save(commit=False)
             freelancer_form.idfreelancer = user
+            freelancer_form.idneighborhood = neighborhood
             freelancer_form.address = 'The freelancer have not a address'
             freelancer_form.save()
             return redirect('registration_complete')
@@ -101,14 +103,17 @@ def login_freelancer(request):
         login(request, user)
     return redirect('profile')
 
+
 @login_required
 def logout_freelancer(request):
     logout(request)
     return redirect('home')
 
+
 @login_required
 def profile(request):
     return render(request, "perfil.html")
+
 
 @login_required
 def edit_profile(request):
@@ -116,6 +121,7 @@ def edit_profile(request):
     freelancer = User.objects.filter(id=user_id).first()
     form = freelancerEditForm(instance=freelancer)
     return render(request, 'edit-profile.html', {"form":form, 'freelancer': freelancer})
+
 
 def update_profile(request):
     freelancer = request.user.freelancer
@@ -126,56 +132,32 @@ def update_profile(request):
         
     return render (request, "perfil.html")
 
-def calendar(request):
-    all_events = Schedule.objects.all()
-    context = {
-        "events":all_events,
-    }
-    return render(request,'schedule.html',context)
 
-def all_events(request):                                                                                                 
-    all_events = Schedule.objects.all()                                                                                    
-    out = []                                                                                                             
-    for event in all_events:                                                                                             
-        out.append({                                                                                                     
-            'title': event.title,                                                                                         
-            'id': event.id,                                                                                              
-            'start': event.starttme.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
-            'end': event.endtime.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
-        })                                                                                                               
-
-    return JsonResponse(out, safe=False)  
-
-def add_event(request):
-    start = request.GET.get("start", None)
-    end = request.GET.get("end", None)
-    title = request.GET.get("title", None)
-    event = Schedule(name=str(title), start=start, end=end)
-    event.save()
-    data = {}
-    return JsonResponse(data)
+def schedule(request):
+    form = ScheduleForm()
+    return render(request, 'schedule.html', {'form': form})
 
 
-def update(request):
-    start = request.GET.get("start", None)
-    end = request.GET.get("end", None)
-    title = request.GET.get("title", None)
-    id = request.GET.get("id", None)
-    event = Schedule.objects.get(id=id)
-    event.start = start
-    event.end = end
-    event.name = title
-    event.save()
-    data = {}
-    return JsonResponse(data)
+def uploadschedule(request):
+    idfreelancer = request.user.id
+    if request.method == "POST":
+        form = ScheduleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "El calendario fue guardado correctamente!!!")
+    else:
+        form = ScheduleForm()
+    schedules = Schedule.objects.filter(idfreelancer__icontains=idfreelancer)
+    return render(request, 'schedule.html', {'form': form,'schedules': schedules})
 
 
-def remove(request):
-    id = request.GET.get("id", None)
-    event = Schedule.objects.get(id=id)
-    event.delete()
-    data = {}
-    return JsonResponse(data)
+def deleteShedule(request, idschedule):
+    schedule = get_object_or_404(Schedule, pk=idschedule)
+    # obtengo el idfreelancer
+    idfreelancer = schedule.idfreelancer
+    schedule.delete()
+    return redirect('/calendarioFreelancer/'+ str(idfreelancer))
+
 
 def detail(request, freelancer_id):
     freelancer = get_object_or_404(Freelancer,pk=freelancer_id)
