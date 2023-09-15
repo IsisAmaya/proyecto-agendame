@@ -73,7 +73,7 @@ def registration_step2(request):
 
     if request.method == 'POST':
         
-        form = freelancerRegistrationForm(request.POST)
+        form = freelancerRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             freelancer_form = form.save(commit=False)
             freelancer_form.idfreelancer = user
@@ -125,8 +125,7 @@ def edit_profile(request):
 
 def update_profile(request):
     freelancer = request.user.freelancer
-    
-    form = freelancerEditForm(request.POST, instance=freelancer)
+    form = freelancerEditForm(request.POST, request.FILES, instance=freelancer)
     if form.is_valid():
         form.save()
         
@@ -138,12 +137,12 @@ def schedule(request):
     return render(request, 'schedule.html', {'form': form})
 
 
-def uploadschedule(request):
-    idfreelancer = request.user.id
+def uploadschedule(request, idfreelancer):
     if request.method == "POST":
         form = ScheduleForm(request.POST)
         if form.is_valid():
             form.save()
+            
             messages.success(request, "El calendario fue guardado correctamente!!!")
     else:
         form = ScheduleForm()
@@ -151,12 +150,13 @@ def uploadschedule(request):
     return render(request, 'schedule.html', {'form': form,'schedules': schedules})
 
 
-def deleteShedule(request, idschedule):
+def deleteSchedule(request, idschedule):
     schedule = get_object_or_404(Schedule, pk=idschedule)
     # obtengo el idfreelancer
     idfreelancer = schedule.idfreelancer
     schedule.delete()
-    return redirect('/calendarioFreelancer/'+ str(idfreelancer))
+    return redirect('calendarioFreelancer/'+ str(idfreelancer))
+    #return render(request, 'schedule.html')
 
 
 def detail(request, freelancer_id):

@@ -30,13 +30,13 @@
 
                     <p class="card-text">
                     
-                        <form class="row g-3" method="POST">
+                        <form enctype="multipart/form-data" class="row g-3" method="POST">
                             {% csrf_token %}
 
                             {{ form | crispy }}
         
                             <div class="d-grid gap-2 col-6 mx-auto">
-                                <button class="btn btn-info" type="submit" style="background-color= #97D2FB;">Registrarse</button>
+                                <button class="btn btn-info" type="submit" style="background-color= #97D2FB;">Completar Información</button>
                             </div>
                             </form>
         

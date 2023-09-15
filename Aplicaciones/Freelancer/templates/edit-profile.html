@@ -25,7 +25,7 @@
 <body>
     <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-4 col-lg-2 min-vh-100 d-flex flex-column justify-content-betweeen" style="background-color: #97D2FB">
+        <div class="col-auto col-md-4 col-lg-3 min-vh-100 d-flex flex-column justify-content-betweeen" style="background-color: #97D2FB">
         <div class="p-2" style="background-color: #97D2FB;">
             <a class="d-flex text-decoration-none mt-1 align-items-center text-black">
             </a>
@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li class="nav-item py-2 py-sm-0">
-                <a href="{% url 'uploadschedule' %}" class="nav-link text-black">
+                <a href="{% url 'uploadschedule' 0 %}" class="nav-link text-black">
                 <i class="bi bi-table"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Disponibilidad</span>
                 </a>
             </li>
@@ -58,7 +58,7 @@
         <br>
         <div class="content container">
         <h1>Editar Perfil</h1>
-        <form action=" {% url 'update_profile' %}" method="POST">
+        <form enctype="multipart/form-data" action=" {% url 'update_profile' %}" method="POST" >
             {% csrf_token %}
             {{ form | crispy }}
 
@@ -67,8 +67,12 @@
                 <button type="submit" value="Guardar" class="btn btn-primary mb-3">Guardar</button>
                 <p{% if message.tags == "success" %} class="alert alert-success "{% endif %}>{{ message }}</p>
             </form>
+
+
+            <a href="{% url 'profile' %}">
+                <button type="button" value="Cancelar" class="btn btn-danger mb-3  mx-2">Cancelar</button>
+            </a>
     
-            <button type="submit" value="Cancelar" class="btn btn-danger mb-3  mx-2">Cancelar</button>
 
 
             </div>

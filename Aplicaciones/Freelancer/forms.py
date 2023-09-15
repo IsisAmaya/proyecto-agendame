@@ -3,8 +3,8 @@ from django import forms
 from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Field
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -40,8 +40,8 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class freelancerEditForm(forms.ModelForm):
-    phone = forms.IntegerField(label="Numero de telefono", required=False)
-    idcity = forms.ModelMultipleChoiceField(queryset=City.objects.all(), label="Ciudades", widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}), required=False)
+    phone = forms.IntegerField(label="Numero de telefono")
+    idcity = forms.ModelMultipleChoiceField(queryset=City.objects.all(), label="Ciudades", required=False)
     imageprofile = forms.ImageField(required=False, label="Imagen de perfil")
     imagejobs = forms.ImageField(required=False, label = "Fotos de trabajos previos")
     idservices = forms.ModelChoiceField(queryset=Service.objects.all(), label="Servicio ofrecido", required=False)
@@ -65,8 +65,8 @@ class ScheduleForm(forms.ModelForm):
         fields = {'date','startime','endtime'}
         labels = {
             "date": ("Fecha"),
-            "startime": ("HoraInicio"),
-            "endtime": ("HoraFin")
+            "startime": ("Hora Inicio"),
+            "endtime": ("Hora Fin")
         }
         widgets = {
             'date': forms.DateInput(
