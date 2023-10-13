@@ -99,12 +99,21 @@
 
                 </div>
 
+                <div class="col-md-6 mt-4">
+                    <h1 style="font-size: 34px;"> 
+                        Descripcion
+                    </h1>
+
+
+
+                </div>
+
             </div>
 
 
             <div class="row">
 
-                <div class="col-md-8 mt-4">
+                <div class="col-md-6 mt-4">
                     
                     {% if user.freelancer.imagejobs %}
         
@@ -118,15 +127,14 @@
 
                 </div>
 
-                <div class="col-md-4">
-
-                    <h1>Descripción</h1>
-                    <ul>
-                        {% for city in freelancer.idcity.all %}
-                        <li>{{ city.namecity }}</li>
-                        {% endfor %}
-                    </ul>
+                <div class="col-md-6 mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            {{ user.freelancer.description }}
+                        </div>
+                    </div>
                 </div>
+
 
             </div>
 

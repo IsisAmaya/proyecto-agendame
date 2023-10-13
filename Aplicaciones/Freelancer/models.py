@@ -53,6 +53,7 @@ class Freelancer(models.Model):
     idcity = models.ManyToManyField(City)
     idneighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
     address = models.CharField(max_length=300)
+    description = models.TextField(default="")
     imageprofile =models.ImageField(upload_to='freelancer/images/', default= 'freelancer/images/default-avatar-profile.jpg')
     imagejobs =models.ImageField(upload_to='freelancer/images/', default="freelancer/images/default-image-5-1.jpg")
     idservices = models.ForeignKey(Service, on_delete=models.CASCADE)
