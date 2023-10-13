@@ -1,26 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card mb-3">
-    <div class="row g-0">
+
+<div class="container">
+    <div class="row mt-4">
         <div class="col-md-4">
-            <img src="{{ freelancer.imageprofile.url }}" class="img-fluid rounded-start" alt="">
+            <!-- Foto de perfil en un círculo -->
+            <div class="rounded-circle overflow-hidden">
+                <img src="{{ freelancer.imageprofile.url }}" class="img-fluid" alt="{{ freelancer.name }}" style="width: 400px; height: 400px;">
+            </div>
         </div>
         <div class="col-md-8">
-            <class="card">
+            <!-- Acerca de -->
+            <h5>Acerca de {{ freelancer.name }} {{ freelancer.lastname }}</h5>
+            <!-- Tarjeta con descripción -->
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ freelancer.name }} {{ freelancer.lastname }}</h5>
-                    <p class="card-text">{{ freelancer.idservices }} </p>
-                    <p class="card-text"> {{ freelancer.idneighborhood }} </p>
+                    Hola, soy un freelancer y aquí va a estar mi descripción.
                 </div>
-            </class>
+            </div>
+            <!-- Trabajos de -->
+            <h5>Trabajos de {{ freelancer.name }} {{ freelancer.lastname }}</h5>
+            <!-- Tarjeta con imagejobs -->
+            <div class="card">
+                <img src="{{ freelancer.imagejobs.url }}" class="card-img-top" alt="Trabajos de {{ freelancer.name }}" style="width: 200px; height: 200px;">
+            </div>
         </div>
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <br>
-                    <h5 class="card-title"> Trabajos de {{ freelancer.name }} </h5>
-                    <img src="{{ freelancer.imagejobs.url }}">
-                </div>
-
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <!-- Nombre y apellido -->
+            <h5 class="card-title">{{ freelancer.name }} {{ freelancer.lastname }}</h5>
+            <!-- Botón con idservices -->
+            <a href="#" class="btn btn-outline-primary rounded-pill mb-2" style="border: none; background-color: #97d2fb; color: black;">
+                {{ freelancer.idservices }}
+            </a>
+            <!-- Botón "Solicitar" -->
+            <a href="#" class="btn btn-outline-primary rounded-pill" style="border: none; background-color: #97d2fb; color: black;">
+                Solicitar
+            </a>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
+
+

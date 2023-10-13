@@ -23,18 +23,24 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
+from django.db.models import Q
+
 
 
 def home(request):
+    search_term = request.GET.get('searchFreelancer')
 
-    searchTerm = request.GET.get('searchFreelancer')
-    if searchTerm:
-        freelancers = Freelancer.objects.filter(nameFreelancer__icontains=searchTerm)
+    if search_term:
+        freelancers = Freelancer.objects.filter(
+            Q(name__icontains=search_term) |
+            Q(lastname__icontains=search_term) |
+            Q(idservices__name__icontains=search_term) |  # Reemplaza 'name' con el nombre correcto del campo
+            Q(idneighborhood__nameneighborhood__icontains=search_term)  # Reemplaza 'name' con el nombre correcto del campo
+        )
     else:
         freelancers = Freelancer.objects.all()
-    return render(request, 'home.html', {'searchTerm':searchTerm, 'freelancers' :freelancers})
 
-
+    return render(request, 'home.html', {'searchTerm': search_term, 'freelancers': freelancers})
 
 def registration_step1(request):
     if request.method == 'GET':
