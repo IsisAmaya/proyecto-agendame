@@ -22,6 +22,14 @@ The following technologies and libraries are necessary for the execution of Agen
 
 `python -m pip install Pillow`
 
+* [Date-Picker](https://pypi.org/project/django-bootstrap-datepicker-plus/): In the system console run the following command:
+
+`pip install django-bootstrap-datepicker-plus`
+
+* [Crispy-Forms](https://github.com/django-crispy-forms/crispy-bootstrap5): In the system console run the following command:
+
+`pip install crispy-bootstrap5`
+
 * [Visual Studio Code](https://code.visualstudio.com/)
 
 * [Git](https://git-scm.com/downloads)
