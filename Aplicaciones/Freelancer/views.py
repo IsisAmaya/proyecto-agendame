@@ -6,8 +6,8 @@
 
 #def home(request):
 
- #   searchTerm=request.GET.get('searchFreelancer')
-  #  return render(request, "home.html", {'searchTerm': searchTerm})
+#   searchTerm=request.GET.get('searchFreelancer')
+#  return render(request, "home.html", {'searchTerm': searchTerm})
 
 
 from django.shortcuts import render
@@ -176,3 +176,5 @@ def filter_category(request, category):
 
 
 
+def analitic(request):
+    return render(request, 'analitic.html')

@@ -15,4 +15,5 @@ urlpatterns = [
     path('calendarioFreelancer/<int:idschedule>/delete', views.deleteSchedule, name="deleteSchedule"),
     path('<int:freelancer_id>', views.detail, name='detail'),
     path('filter/<str:categoria>/', views.filter_category,name='filter_services'),
+    path('profile/analitics/', views.analitic, name="analitic"),
 ]
