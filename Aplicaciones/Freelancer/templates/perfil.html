@@ -31,29 +31,24 @@
             <ul class="nav nav-pills flex-column mt-4">
             <li class="nav-item py-2 py-sm-0">
                 <a href="{% url 'profile' %}" class="nav-link text-black">
-                <i class="bi bi-person-circle"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Perfil</span>
+                <i class="bi bi-person-circle"></i><span class="fs-4 ms-1 d-none d-sm-inline fw-bold">Perfil</span>
                 </a>
             </li>
             <li class="nav-item py-3 py-sm-0">
-                <a href="{% url 'uploadschedule' 0  %}" class="nav-link text-black">
-                <i class="bi bi-table"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Disponibilidad</span>
+                <a href="{% url 'calendar' %}" class="nav-link text-black">
+                <i class="bi bi-table"></i><span class="fs-4 ms-1 d-none d-sm-inline fw-bold">Disponibilidad</span>
                 </a>
             </li>
             <li class="nav-item py-2 py-sm-0">
                 <a href="#" class="nav-link text-black">
-                <i class="bi bi-star-fill"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Reseñas</span>
+                <i class="bi bi-star-fill"></i><span class="fs-4 ms-1 d-none d-sm-inline fw-bold">Reseñas</span>
                 </a>
             </li>
-            <li class="nav-item py-2 py-sm-0">
-                <a href="{% url 'analitic'  %}" class="nav-link text-black">
-                <i class="bi bi-bar-chart-line-fill"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Estadisticas</span>
-                </a>
-            </li>
-            <li class="nav-item py-2 py-sm-0">
+                <li class="nav-item py-2 py-sm-0">
                 <a href="{% url 'logout' %}" class="nav-link text-black">
-                    <i class="bi bi-box-arrow-left"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Salir</span>
+                    <i class="bi bi-box-arrow-left"></i><span class="fs-4 ms-1 d-none d-sm-inline fw-bold">Salir</span>
                 </a>
-            </li>
+                </li>
             </ul>
         </div>
         </div>
@@ -104,21 +99,12 @@
 
                 </div>
 
-                <div class="col-md-6 mt-4">
-                    <h1 style="font-size: 34px;"> 
-                        Descripcion
-                    </h1>
-
-
-
-                </div>
-
             </div>
 
 
             <div class="row">
 
-                <div class="col-md-6 mt-4">
+                <div class="col-md-8 mt-4">
                     
                     {% if user.freelancer.imagejobs %}
         
@@ -132,14 +118,15 @@
 
                 </div>
 
-                <div class="col-md-6 mt-4">
-                    <div class="card">
-                        <div class="card-body">
-                            {{ user.freelancer.description }}
-                        </div>
-                    </div>
-                </div>
+                <div class="col-md-4">
 
+                    <h1>Descripción</h1>
+                    <ul>
+                        {% for city in freelancer.idcity.all %}
+                        <li>{{ city.namecity }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
 
             </div>
 

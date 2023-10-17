@@ -12,21 +12,17 @@ class CustomUserCreationForm(UserCreationForm):
             model = User
             fields = [
                 'username',
-                'email',
             ]
             
             labels = {
-            'username': ('Nombre de usuario'),
-            'email': ("Correo Electronico"),
-            }
+            "username": ("Nombre de usuario"),
+        }
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-        for fieldname in ['username', 'password1', 'password2', 'email']:
+        for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
             self.fields[fieldname].widget.attrs.update({'class': 'form-control'})
         
-        self.fields['password1'].label = 'Contraseña'
-        self.fields['password2'].label = 'Confirmar Contraseña'
 
 
 """ class userEditForm(forms.ModelForm):
@@ -95,7 +91,6 @@ class freelancerRegistrationForm(forms.ModelForm):
     idcountry = forms.ModelChoiceField(queryset=Country.objects.all() , label="Pais")
     idcity = forms.ModelMultipleChoiceField(queryset=City.objects.all(), label="Ciudades", widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
     idneighborhood = forms.ModelChoiceField(queryset=Neighborhood.objects.all(), required=False, widget=forms.HiddenInput())
-    description = forms.Textarea()
     imageprofile = forms.ImageField(required=False, label="Imagen de perfil")
     imagejobs = forms.ImageField(required=False, label = "Fotos de trabajos previos")
     address =  forms.CharField(widget=forms.HiddenInput(), required=False)
@@ -115,7 +110,6 @@ class freelancerRegistrationForm(forms.ModelForm):
             'idcountry',
             'idcity',
             'idneighborhood',
-            'description',
             'imageprofile',
             'imagejobs',
             'address',

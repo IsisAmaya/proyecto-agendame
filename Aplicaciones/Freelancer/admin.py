@@ -4,10 +4,11 @@ from .models import Country
 from .models import City
 from .models import Neighborhood
 from .models import Service
-from .models import User
 from .models import Customer
-from .models import Request
+from .models import User
 from .models import Schedule
+from .models import Events
+from .models import Request
 
 # Register your models here.
 admin.site.register(Freelancer)
@@ -16,6 +17,9 @@ admin.site.register(City)
 admin.site.register(Neighborhood)
 admin.site.register(Service)
 admin.site.register(Customer)
-admin.site.register(Request)
 admin.site.register(Schedule)
+admin.site.register(Events)
+admin.site.register(Request)
+
+
 

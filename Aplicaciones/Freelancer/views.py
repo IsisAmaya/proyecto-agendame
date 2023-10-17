@@ -6,8 +6,8 @@
 
 #def home(request):
 
-#   searchTerm=request.GET.get('searchFreelancer')
-#  return render(request, "home.html", {'searchTerm': searchTerm})
+ #   searchTerm=request.GET.get('searchFreelancer')
+  #  return render(request, "home.html", {'searchTerm': searchTerm})
 
 
 from django.shortcuts import render
@@ -23,24 +23,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Q
-
 
 
 def home(request):
-    search_term = request.GET.get('searchFreelancer')
 
-    if search_term:
-        freelancers = Freelancer.objects.filter(
-            Q(name__icontains=search_term) |
-            Q(lastname__icontains=search_term) |
-            Q(idservices__name__icontains=search_term) |  # Reemplaza 'name' con el nombre correcto del campo
-            Q(idneighborhood__nameneighborhood__icontains=search_term)  # Reemplaza 'name' con el nombre correcto del campo
-        )
+    searchTerm = request.GET.get('searchFreelancer')
+    if searchTerm:
+        freelancers = Freelancer.objects.filter(nameFreelancer__icontains=searchTerm)
     else:
         freelancers = Freelancer.objects.all()
+    return render(request, 'home.html', {'searchTerm':searchTerm, 'freelancers' :freelancers})
 
-    return render(request, 'home.html', {'searchTerm': search_term, 'freelancers': freelancers})
+
 
 def registration_step1(request):
     if request.method == 'GET':
@@ -126,6 +120,7 @@ def edit_profile(request):
     user_id = request.user.id
     freelancer = User.objects.filter(id=user_id).first()
     form = freelancerEditForm(instance=freelancer)
+    print(freelancer)
     return render(request, 'edit-profile.html', {"form":form, 'freelancer': freelancer})
 
 
@@ -175,6 +170,60 @@ def filter_category(request, category):
     return render(request, 'home.html', {'filter_services': filter_category})
 
 
+def calendar(request):
+    all_events = Events.objects.all()
+    context = {
+        "events":all_events,
+    }
+    return render(request,'calendar.html',context)
 
-def analitic(request):
-    return render(request, 'analitic.html')
+def all_events(request):  
+    user_id = request.user.id                                                                                                                                                                                 
+    out = []  
+    freelancer = User.objects.filter(id=user_id).first()
+    all_events = Events.objects.filter(idfreelancer=freelancer)                                                                                                     
+    for event in all_events:  
+        print(event)                                                                                           
+        out.append({                                                                                                     
+            'title': event.name,                                                                                         
+            'id': event.id,                                                                                              
+            'start': event.start,                                                         
+            'end': event.end,                                                            
+        })                                                                                                               
+                                                                                                                      
+    return JsonResponse(out, safe=False) 
+
+def add_event(request):
+    user_id = request.user.id
+    freelancer = User.objects.filter(id=user_id).first()
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
+    title = request.GET.get("title", None)
+    event = Events(name=str(title), start=start, end=end, idfreelancer=freelancer)
+    event.save()
+    data = {}
+    return JsonResponse(data)
+
+
+def update(request):
+    user_id = request.user.id
+    freelancer = User.objects.filter(id=user_id).first()
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
+    title = request.GET.get("title", None)
+    id = request.GET.get("id", None)
+    event = Events.objects.get(id=id)
+    event.start = start
+    event.end = end
+    event.name = title
+    event.save()
+    data = {}
+    return JsonResponse(data)
+
+
+def remove(request):
+    id = request.GET.get("id", None)
+    event = Events.objects.get(id=id)
+    event.delete()
+    data = {}
+    return JsonResponse(data)

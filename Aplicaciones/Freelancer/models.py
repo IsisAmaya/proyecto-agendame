@@ -53,13 +53,31 @@ class Freelancer(models.Model):
     idcity = models.ManyToManyField(City)
     idneighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
     address = models.CharField(max_length=300)
-    description = models.TextField(default="")
     imageprofile =models.ImageField(upload_to='freelancer/images/', default= 'freelancer/images/default-avatar-profile.jpg')
     imagejobs =models.ImageField(upload_to='freelancer/images/', default="freelancer/images/default-image-5-1.jpg")
     idservices = models.ForeignKey(Service, on_delete=models.CASCADE)
 
+
+class Schedule(models.Model):
+    idschedule= models.AutoField(primary_key=True)
+    idfreelancer = models.IntegerField(default=0)
+    date = models.DateField()
+    startime = models.TimeField ()
+    endtime = models.TimeField ()
+    state = models.BooleanField(default=True)
+
+class Events(models.Model):
+    id = models.AutoField(primary_key=True)
+    idfreelancer = models.CharField(max_length=255,null=True,blank=True)
+    name = models.CharField(max_length=255,null=True,blank=True)
+    start = models.DateTimeField(null=True,blank=True)
+    end = models.DateTimeField(null=True,blank=True)
+
+    def __str__(self):
+        return self.name
+    
 class Customer(models.Model):
-    idcustomer = models.ForeignKey(User, on_delete=models.CASCADE)
+    idcustomer = models.OneToOneField(User, on_delete=models.CASCADE)
     idcard = models.IntegerField()
     name = models.CharField(max_length=250)
     lastname = models.CharField(max_length=250)
@@ -71,25 +89,12 @@ class Customer(models.Model):
     idneighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
     address = models.CharField(max_length=300)
 
-class Schedule(models.Model):
-    idschedule= models.AutoField(primary_key=True)
-    idfreelancer = models.IntegerField(default=0)
-    date = models.DateField()
-    startime = models.TimeField ()
-    endtime = models.TimeField ()
-    state = models.BooleanField(default=True)
-
 class Request(models.Model):
     idrequest = models.AutoField(primary_key=True)
-    idcustomer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    idcustomer = models.ForeignKey(Customer, on_delete=models.CASCADE, default='2')
     idfreelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
-    idschedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    registerday = models.DateField()
-    state = models.IntegerField()
-
-
-
-
-
-
-
+    requestday = models.DateField()
+    requesttime = models.TimeField()
+    address = models.CharField(max_length=300)
+    phone= models.IntegerField()
+    state = models.CharField(max_length=100, default="Pendiente")
