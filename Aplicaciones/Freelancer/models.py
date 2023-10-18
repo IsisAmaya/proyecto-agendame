@@ -81,14 +81,23 @@ class Schedule(models.Model):
 
 class Request(models.Model):
     idrequest = models.AutoField(primary_key=True)
-    idcustomer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    idcustomer = models.ForeignKey(Customer, on_delete=models.CASCADE, default='2')
     idfreelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
-    idschedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    registerday = models.DateField()
-    state = models.IntegerField()
+    requestday = models.DateField()
+    requesttime = models.TimeField()
+    address = models.CharField(max_length=300)
+    phone= models.IntegerField()
+    state = models.CharField(max_length=100, default="Pendiente")
 
+class Events(models.Model):
+    id = models.AutoField(primary_key=True)
+    idfreelancer = models.CharField(max_length=255,null=True,blank=True)
+    name = models.CharField(max_length=255,null=True,blank=True)
+    start = models.DateTimeField(null=True,blank=True)
+    end = models.DateTimeField(null=True,blank=True)
 
-
+    def __str__(self):
+        return self.name
 
 
 

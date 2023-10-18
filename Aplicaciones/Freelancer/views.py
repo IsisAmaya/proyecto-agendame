@@ -192,3 +192,61 @@ def analitic(request):
         data['startimes'].append(schedules.startime.strftime('%H:%M:%S'))
     
     return render(request, 'analitic.html', {'data': data})
+
+def calendar(request):
+    all_events = Events.objects.all()
+    context = {
+        "events":all_events,
+    }
+    return render(request,'calendar.html',context)
+
+def all_events(request):  
+    user_id = request.user.id                                                                                                                                                                                 
+    out = []  
+    freelancer = User.objects.filter(id=user_id).first()
+    all_events = Events.objects.filter(idfreelancer=freelancer)                                                                                                     
+    for event in all_events:  
+        print(event)                                                                                           
+        out.append({                                                                                                     
+            'title': event.name,                                                                                         
+            'id': event.id,                                                                                              
+            'start': event.start,                                                         
+            'end': event.end,                                                            
+        })                                                                                                               
+                                                                                                                      
+    return JsonResponse(out, safe=False) 
+
+def add_event(request):
+    user_id = request.user.id
+    freelancer = User.objects.filter(id=user_id).first()
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
+    title = request.GET.get("title", None)
+    event = Events(name=str(title), start=start, end=end, idfreelancer=freelancer)
+    event.save()
+    data = {}
+    return JsonResponse(data)
+
+
+def update(request):
+    user_id = request.user.id
+    freelancer = User.objects.filter(id=user_id).first()
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
+    title = request.GET.get("title", None)
+    id = request.GET.get("id", None)
+    event = Events.objects.get(id=id)
+    event.start = start
+    event.end = end
+    event.name = title
+    event.save()
+    data = {}
+    return JsonResponse(data)
+
+
+def remove(request):
+    id = request.GET.get("id", None)
+    event = Events.objects.get(id=id)
+    event.delete()
+    data = {}
+    return JsonResponse(data)

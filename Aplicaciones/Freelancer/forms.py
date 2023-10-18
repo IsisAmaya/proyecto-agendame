@@ -1,4 +1,3 @@
-from bootstrap_datepicker_plus.widgets import DatePickerInput
 from django import forms
 from . models import *
 from django.contrib.auth.models import User
