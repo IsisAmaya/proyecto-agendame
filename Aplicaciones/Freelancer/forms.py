@@ -46,6 +46,7 @@ class CustomUserCreationForm(UserCreationForm):
 class freelancerEditForm(forms.ModelForm):
     phone = forms.IntegerField(label="Numero de telefono")
     idcity = forms.ModelMultipleChoiceField(queryset=City.objects.all(), label="Ciudades", required=False)
+    description = forms.CharField(max_length=1000, required=False, widget=forms.Textarea(), label="Descripción")
     imageprofile = forms.ImageField(required=False, label="Imagen de perfil")
     imagejobs = forms.ImageField(required=False, label = "Fotos de trabajos previos")
     idservices = forms.ModelChoiceField(queryset=Service.objects.all(), label="Servicio ofrecido", required=False)
@@ -56,6 +57,7 @@ class freelancerEditForm(forms.ModelForm):
         fields = [
                 'phone',
                 'idcity',
+                'description',
                 'imageprofile',
                 'imagejobs',
                 'idservices',
@@ -95,7 +97,7 @@ class freelancerRegistrationForm(forms.ModelForm):
     idcountry = forms.ModelChoiceField(queryset=Country.objects.all() , label="Pais")
     idcity = forms.ModelMultipleChoiceField(queryset=City.objects.all(), label="Ciudades", widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
     idneighborhood = forms.ModelChoiceField(queryset=Neighborhood.objects.all(), required=False, widget=forms.HiddenInput())
-    description = forms.Textarea()
+    description = forms.CharField(max_length=1000, required=False, widget=forms.Textarea(), label="Descripción")
     imageprofile = forms.ImageField(required=False, label="Imagen de perfil")
     imagejobs = forms.ImageField(required=False, label = "Fotos de trabajos previos")
     address =  forms.CharField(widget=forms.HiddenInput(), required=False)

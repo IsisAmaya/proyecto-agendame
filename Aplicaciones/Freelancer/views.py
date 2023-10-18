@@ -15,6 +15,7 @@ from django.http import HttpResponse
 from .models import Freelancer, User, Schedule, Neighborhood
 from .models import Schedule
 from django.http import JsonResponse
+import json
 from . forms import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
@@ -177,4 +178,17 @@ def filter_category(request, category):
 
 
 def analitic(request):
-    return render(request, 'analitic.html')
+    
+    requests = Request.objects.get(idfreelancer=9)
+    schedules = requests.idschedule.date
+    
+    data = {
+        'labels': [],  # Fechas
+        'startimes': [],  # Horas de inicio
+    }
+    
+    for schedule in schedules:
+        data['labels'].append(schedules.date.strftime('%Y-%m-%d'))
+        data['startimes'].append(schedules.startime.strftime('%H:%M:%S'))
+    
+    return render(request, 'analitic.html', {'data': data})

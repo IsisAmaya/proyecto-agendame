@@ -1,1 +1,54 @@
-<h1>Aqui va a ir la grafica para analtica</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráfico de un Freelancer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="freelancerChart" width="400" height="200"></canvas>
+    <script>
+        var ctx = document.getElementById('freelancerChart').getContext('2d');
+        var data = {{ data|safe }};
+
+        var chartData = {
+            labels: data.labels,
+            datasets: [
+                {
+                    label: 'Hora de Inicio',
+                    data: data.startimes,
+                    borderColor: 'blue',
+                    fill: false,
+                }
+            ]
+        };
+
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            displayFormats: {
+                                hour: 'HH:mm'
+                            },
+                            unit: 'day',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Fecha'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Hora de inicio'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
