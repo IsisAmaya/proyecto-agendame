@@ -81,7 +81,7 @@ class Schedule(models.Model):
 
 class Request(models.Model):
     idrequest = models.AutoField(primary_key=True)
-    idcustomer = models.ForeignKey(Customer, on_delete=models.CASCADE, default='2')
+    idcustomer = models.ForeignKey(Customer, on_delete=models.CASCADE, default='1')
     idfreelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
     requestday = models.DateField()
     requesttime = models.TimeField()

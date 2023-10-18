@@ -13,24 +13,36 @@ def search(request):
 
 def solicitud(request,idfreelancer):
 
-    # idcustomer = request.user.customer
-    # form = requestForm(request.POST, request.FILES, instance=idcustomer
-    # users = request.user.idrequest
-    # print(users)
     freelancer = get_object_or_404(Freelancer,pk=idfreelancer)
-    # freelancer = Freelancer.objects.all()
-    print(freelancer)
+    print(freelancer.idfreelancer)
+
+    all_events = Events.objects.filter(idfreelancer=freelancer.idfreelancer)
+
+    events=[]
+    for event in all_events:  
+        print(event)                                                                                           
+        events.append({                                                                                                     
+            'title': event.name,                                                                                         
+            'id': event.id,                                                                                              
+            'start': event.start,                                                         
+            'end': event.end,                                                            
+        })
+        print(event.start)
+        print(event.end)                                                                                                          
+            
+    
+    horas = []
+    for e in range(0,25):
+        horas.append(e)
+
     if request.method == "POST":
-        form = requestForm(freelancer,request.POST)
+        form = requestForm(request.POST)
         if form.is_valid():
-            print('entro a POST')
             form.save()
             messages.success(request, "Solicitud guardada correctamente!!!")
     else:
-        form = requestForm(freelancer,request.POST)
+        
+        form = requestForm(initial={'idfreelancer': freelancer})
+        
     
-    return render(request, 'solicitud.html', {'form': form,'freelancer':freelancer})
-
-
-
-
+    return render(request, 'solicitud.html', {'form': form,'freelancer':freelancer,'horas':horas,'events':events})
