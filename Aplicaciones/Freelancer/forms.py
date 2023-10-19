@@ -28,19 +28,6 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password2'].label = 'Confirmar Contraseña'
 
 
-""" class userEditForm(forms.ModelForm):
-    email= forms.EmailField(required=False, label="Correo electronico")
-    username= forms.CharField(max_length=250, required=False, label="Nombre de usuario")
-    
-    class Meta:
-        model = User
-        fields = [
-            'email',
-            'username',
-        ]
-"""
-
-
 
 class freelancerEditForm(forms.ModelForm):
     phone = forms.IntegerField(label="Numero de telefono")

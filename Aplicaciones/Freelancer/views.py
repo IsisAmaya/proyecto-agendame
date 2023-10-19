@@ -25,6 +25,9 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Q
+import datetime
+from django.db.models.functions import TruncDate, ExtractHour,  ExtractMinute
+from django.db.models import Avg
 
 
 
@@ -178,20 +181,33 @@ def filter_category(request, category):
 
 
 def analitic(request):
+    dataset = []
+    user_id = request.user.id
+    freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
+    freelancer_id = freelancer.pk
     
-    requests = Request.objects.get(idfreelancer=9)
-    schedules = requests.idschedule.date
+    requests = Request.objects.filter(idfreelancer=freelancer_id)
     
-    data = {
-        'labels': [],  # Fechas
-        'startimes': [],  # Horas de inicio
-    }
     
-    for schedule in schedules:
-        data['labels'].append(schedules.date.strftime('%Y-%m-%d'))
-        data['startimes'].append(schedules.startime.strftime('%H:%M:%S'))
+    hours_prom = requests.annotate(hour=ExtractHour('requesttime')).values('requestday').annotate(prom=Avg('hour'))
     
-    return render(request, 'analitic.html', {'data': data})
+
+    for hour in hours_prom:
+        dic = {}
+        
+        fecha = hour['requestday']
+        hora = hour['prom']
+        
+        hora = datetime.timedelta(hours=hora)
+        convert = (datetime.datetime(1, 1, 1) + hora).time()
+        
+        dic['x'] = fecha.strftime("%Y-%m-%d")  +' 00:00:00'
+        dic['y'] = '2023-10-15 ' + convert.strftime("%H:%M:%S")
+        dataset.append(dic)
+    
+    print(dataset)
+    
+    return render(request, 'analitic.html', {'dataset': dataset})
 
 def calendar(request):
     all_events = Events.objects.all()
@@ -213,7 +229,6 @@ def all_events(request):
             'start': event.start,                                                         
             'end': event.end,                                                            
         })                                                                                                               
-                                                                                                                      
     return JsonResponse(out, safe=False) 
 
 def add_event(request):

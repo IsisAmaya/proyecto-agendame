@@ -9,10 +9,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.files.uploadedfile import SimpleUploadedFile
 from Aplicaciones.Freelancer.models import *
-class requestForm(forms.ModelForm):
 
-   
+
+class requestForm(forms.ModelForm):
     idfreelancer = forms.ModelChoiceField(queryset=Freelancer.objects.all(), widget = forms.HiddenInput(),label="Freelancer")
+    idcustomer = forms.ModelChoiceField(queryset=Customer.objects.all(), widget = forms.HiddenInput(),label="Customer", required=False)
     # CHOICES = [
     #     ('1', 'Option 1'),
     #     ('2', 'Option 2'),
@@ -26,17 +27,17 @@ class requestForm(forms.ModelForm):
     address = forms.CharField(label='Dirección')
     phone = forms.CharField(label="Teléfono")
 
-
-
     class Meta:
         model = Request
         fields = [
+                'idfreelancer',
                 'idcustomer',
                 'requestday',
                 'requesttime',
                 'address',
                 'phone',
                 ]
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -94,8 +95,6 @@ class customerRegistrationForm(forms.ModelForm):
     imageprofile = forms.ImageField(required=False, label="Imagen de perfil")
     address =  forms.CharField(widget=forms.HiddenInput(), required=False)
 
-    
-    
     
     class Meta:
         model = Customer

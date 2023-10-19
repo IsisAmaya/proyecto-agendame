@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <nav class="col-md-2 d-md-block vh-50" style="background-color: #97d2fb; margin: 0; padding: 0;">
+        <nav class="col-md-2 d-md-block vh-50" style="background-color: white; margin: 0; padding: 0;">
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link active" href="#">
@@ -19,6 +19,7 @@
             </ul>
         </nav>
         <main class="col-md-10 px-md-4">
+            <div class="row"><br></div>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 {% for freelancer in freelancers %}
                 <div class="col-md-4">
@@ -52,10 +53,11 @@
                                 Ver perfil
                             </a>
                             <!-- Botón "Solicitar" -->
+                            {% if user.is_authenticated %}
                             <a href="customer/solicitud/{{freelancer.id}}" class="btn btn-outline-primary rounded-pill" style="border: none; background-color: #97d2fb; color: black;">
                                 Solicitar
                             </a>
-                            
+                            {% endif %}
 
                         </div>
                     </div>

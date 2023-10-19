@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from . forms import *
-from django.http import JsonResponse
-import json
+import random
+import string
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
 from django.contrib.auth import login, logout, authenticate
@@ -11,7 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.contrib import messages
 from Aplicaciones.Freelancer.models import User,Request, Events
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 
@@ -19,9 +22,17 @@ def search(request):
     return HttpResponse('hello there')
 
 def solicitud(request,idfreelancer):
-
+    caracteres = string.ascii_letters + string.digits  # Letras y dígitos
+    codigo = ''.join(random.choice(caracteres) for _ in range(8))
+    
+    user_id = request.user.id
+    customer = Customer.objects.get(idcustomer_id = user_id)
+    
     freelancer = get_object_or_404(Freelancer,pk=idfreelancer)
     print(freelancer.idfreelancer)
+    
+    user1 = User.objects.get(id=user_id)
+    user2 = User.objects.get(id=freelancer.idfreelancer_id)
 
     all_events = Events.objects.filter(idfreelancer=freelancer.idfreelancer)
 
@@ -45,14 +56,44 @@ def solicitud(request,idfreelancer):
     if request.method == "POST":
         form = requestForm(request.POST)
         if form.is_valid():
-            form.save()
+            customer_form =  form.save(commit=False)
+            customer_form.idcustomer = customer
+            customer_form.save()
+            
+            last_request = Request.objects.last()
+            print(last_request)
+            
+            send_mail(
+            'Confirmación de solicitud de freelancer',
+            f'Hola, este correo contiene la informacion de tu solicitud a continucion: \n \nFreelancer: {freelancer.name} {freelancer.lastname}\nTel Freelancer: {freelancer.phone} \nDia del servicio: {last_request.requestday} \nHora del servicio: {last_request.requesttime}',
+            settings.EMAIL_HOST_USER,
+            [user1.email],
+            fail_silently=False)
+            
+            send_mail(
+            'Confirmación de solicitud de servicio',
+            f'Hola, este correo contiene la informacion de la solicitud realizada por el cliente a continucion: \n \nFreelancer: {customer.name} {customer.lastname}\nTel Freelancer: {customer.phone} \nDia del servicio: {last_request.requestday} \nHora del servicio: {last_request.requesttime}',
+            settings.EMAIL_HOST_USER,
+            [user2.email],
+            fail_silently=False)
+            
+            send_mail(
+            'Agendame - Codigo de seguridad',
+            f'Hola, este correo contiene el codigo de seguridad para que presentes y revises al momento del servicio: \n \n {codigo}',
+            settings.EMAIL_HOST_USER,
+            [user1.email, user2.email],
+            fail_silently=False)
+            
             messages.success(request, "Solicitud guardada correctamente!!!")
+            url = reverse('home') 
+            return HttpResponseRedirect(url)
     else:
         
         form = requestForm(initial={'idfreelancer': freelancer})
         
     
     return render(request, 'solicitud.html', {'form': form,'freelancer':freelancer,'horas':horas,'events':events})
+
 
 def registration_step1_(request):
     if request.method == 'GET':
@@ -119,7 +160,7 @@ def login_customer_(request):
         return render(request,'login_.html',{'form': AuthenticationForm(),'error': 'username and password do not match'})
     else:
         login(request, user)
-    return redirect('profile')
+    return redirect('profile_')
 
 
 @login_required
@@ -130,7 +171,13 @@ def logout_customer(request):
 
 @login_required
 def profile_(request):
-    return render(request, "profile_.html")
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+    if user.groups.filter(name='Customers').exists():
+        return render(request, "profile_.html")
+    elif user.groups.filter(name='Freelancers').exists():
+        url = reverse('profile') 
+        return HttpResponseRedirect(url)
 
 
 @login_required

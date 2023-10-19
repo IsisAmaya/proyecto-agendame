@@ -21,13 +21,15 @@
 
 <body>
     <div class="container"><br>
+        <a class="btn btn-outline-info " href="{% url 'home' %}">Inicio</a>
+    </div>
+    <div class="container"><br>
         <h2 class="card-title">Agendar Cita</h5>
     </div>
-    <div class="container d-flex align-items-center" style="height: 100vh;">
+    <div class="container d-flex align-items-center" style="height: 90vh;">
 
         <div class="row">
             <div class="col">
-
                 <form class="row g-2" action="" method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
