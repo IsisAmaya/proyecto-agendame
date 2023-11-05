@@ -265,3 +265,7 @@ def remove(request):
     event.delete()
     data = {}
     return JsonResponse(data)
+
+
+def map(request):
+    return render(request, 'map.html')

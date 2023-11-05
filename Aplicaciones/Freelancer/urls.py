@@ -21,4 +21,5 @@ urlpatterns = [
     path('calendar/add_event/', views.add_event, name='add_event'),
     path('calendar/update/', views.update, name='update'),
     path('calendar/remove/', views.remove, name='remove'),
+    path('map/', views.map, name="map"),
 ]
