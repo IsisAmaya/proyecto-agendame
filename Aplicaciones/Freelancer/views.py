@@ -52,7 +52,7 @@ def registration_step1(request):
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
-                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                user = User.objects.create_user(request.POST['username'], request.POST['email'], password=request.POST['password1'])
                 
                 freelancers_group = Group.objects.get(name='Freelancers')
                 user.groups.add(freelancers_group)
@@ -270,6 +270,7 @@ def remove(request):
     data = {}
     return JsonResponse(data)
 
+<<<<<<< HEAD
 def request(request):
     user_id = request.user.id
     freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
@@ -282,3 +283,8 @@ def updateRequest(request,idrequest):
     # freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
     Request.objects.filter(pk=idrequest).update(state='Confirmado')
     return redirect('/freelancer/request/')
+=======
+
+def map(request):
+    return render(request, 'map.html')
+>>>>>>> 74fd72c97c65a042ec6ecd17dbeb77b4aa342118

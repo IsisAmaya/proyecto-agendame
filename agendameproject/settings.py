@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
 from dotenv import load_dotenv, find_dotenv
+from distutils.sysconfig import get_python_lib
+
+os.environ["PATH"] += os.pathsep + get_python_lib() + '\\osgeo'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,7 +51,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap5",
     'bootstrap_datepicker_plus',
-
+    'django.contrib.gis',
+    'leaflet',
+    
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

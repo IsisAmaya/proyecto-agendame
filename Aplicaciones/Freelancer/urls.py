@@ -21,6 +21,10 @@ urlpatterns = [
     path('calendar/add_event/', views.add_event, name='add_event'),
     path('calendar/update/', views.update, name='update'),
     path('calendar/remove/', views.remove, name='remove'),
+<<<<<<< HEAD
     path('request/', views.request, name='request'),
     path('request/<int:idrequest>/update', views.updateRequest, name="updateRequest"),
+=======
+    path('map/', views.map, name="map"),
+>>>>>>> 74fd72c97c65a042ec6ecd17dbeb77b4aa342118
 ]

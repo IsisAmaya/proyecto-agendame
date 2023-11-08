@@ -26,6 +26,7 @@
 
 <body>
     <div class="container-fluid">
+<<<<<<< HEAD
         <div class="row flex-nowrap">
             <div class="col-auto col-md-4 col-lg-3 min-vh-100 d-flex flex-column justify-content-betweeen"
                 style="background-color: #97D2FB">
@@ -64,6 +65,49 @@
                             </a>
                         </li>
                     </ul>
+=======
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-4 col-lg-3 min-vh-100 d-flex flex-column justify-content-betweeen" style="background-color: #97D2FB">
+        <div class="p-2" style="background-color: #97D2FB;">
+            <a class="d-flex text-decoration-none mt-1 align-items-center text-black">
+            </a>
+            <ul class="nav nav-pills flex-column mt-4">
+            <li class="nav-item py-2 py-sm-0">
+                <a href="{% url 'profile' %}" class="nav-link text-black">
+                <i class="bi bi-person-circle"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Perfil</span>
+                </a>
+            </li>
+            <li class="nav-item py-3 py-sm-0">
+                <a href="{% url 'uploadschedule' 0  %}" class="nav-link text-black">
+                <i class="bi bi-table"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Disponibilidad</span>
+                </a>
+            </li>
+            <li class="nav-item py-2 py-sm-0">
+                <a href="#" class="nav-link text-black">
+                <i class="bi bi-star-fill"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Reseñas</span>
+                </a>
+            </li>
+            <li class="nav-item py-2 py-sm-0">
+                <a href="{% url 'analitic'  %}" class="nav-link text-black">
+                <i class="bi bi-bar-chart-line-fill"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Estadisticas</span>
+                </a>
+            </li>
+            <li class="nav-item py-2 py-sm-0">
+                <a href="{% url 'logout' %}" class="nav-link text-black">
+                    <i class="bi bi-box-arrow-left"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Salir</span>
+                </a>
+            </li>
+            </ul>
+        </div>
+        </div>
+        <div class="col-md-10 col-lg-8 min-vh-100 d-flex flex-column">
+        <br>
+        <div class="content container">
+
+            <div class="row">
+                <div class="col">
+                    <h1> Promedio de horario solicitado </h1>
+>>>>>>> 74fd72c97c65a042ec6ecd17dbeb77b4aa342118
                 </div>
             </div>
             <div class="col-md-10 col-lg-8 min-vh-100 d-flex flex-column">

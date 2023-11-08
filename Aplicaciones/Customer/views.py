@@ -102,7 +102,7 @@ def registration_step1_(request):
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
-                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                user = User.objects.create_user(request.POST['username'], request.POST['email'], password=request.POST['password1'])
                 
                 customers_group = Group.objects.get(name='Customers')
                 user.groups.add(customers_group)

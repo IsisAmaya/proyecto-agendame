@@ -1,0 +1,29 @@
+{% load leaflet_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa</title>
+    {% leaflet_js %}
+    {% leaflet_css %}
+    <style>
+        .leaflet-container { height: 100%; }
+    </style>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        L.marker([51.5, -0.09]).addTo(map)
+            .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+            .openPopup();
+        </script>
+</head>
+<body>
+    <h1>Mushrooms Spots</h1>
+    {% leaflet_map "map" %}
+</body>
+</html>
