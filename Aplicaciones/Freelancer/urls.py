@@ -11,8 +11,8 @@ urlpatterns = [
     path('profile/', views.profile, name="profile"),
     path('profile/edit/', views.edit_profile, name="edit_profile"),
     path('profile/update/', views.update_profile, name="update_profile"),
-    path('calendarioFreelancer/<int:idfreelancer>', views.uploadschedule, name="uploadschedule"),
-    path('calendarioFreelancer/<int:idschedule>/delete', views.deleteSchedule, name="deleteSchedule"),
+    # path('calendarioFreelancer/<int:idfreelancer>', views.uploadschedule, name="uploadschedule"),
+    # path('calendarioFreelancer/<int:idschedule>/delete', views.deleteSchedule, name="deleteSchedule"),
     path('<int:freelancer_id>', views.detail, name='detail'),
     path('filter/<str:categoria>/', views.filter_category,name='filter_services'),
     path('profile/analitics/', views.analitic, name="analitic"),
@@ -21,4 +21,6 @@ urlpatterns = [
     path('calendar/add_event/', views.add_event, name='add_event'),
     path('calendar/update/', views.update, name='update'),
     path('calendar/remove/', views.remove, name='remove'),
+    path('request/', views.request, name='request'),
+    path('request/<int:idrequest>/update', views.updateRequest, name="updateRequest"),
 ]

@@ -7,7 +7,6 @@ from .models import Service
 from .models import User
 from .models import Customer
 from .models import Request
-from .models import Schedule
 from .models import Events
 
 # Register your models here.
@@ -18,6 +17,5 @@ admin.site.register(Neighborhood)
 admin.site.register(Service)
 admin.site.register(Customer)
 admin.site.register(Request)
-admin.site.register(Schedule)
 admin.site.register(Events)
 

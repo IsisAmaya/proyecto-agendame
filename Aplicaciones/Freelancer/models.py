@@ -71,14 +71,6 @@ class Customer(models.Model):
     idneighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
     address = models.CharField(max_length=300)
 
-class Schedule(models.Model):
-    idschedule= models.AutoField(primary_key=True)
-    idfreelancer = models.IntegerField(default=0)
-    date = models.DateField()
-    startime = models.TimeField ()
-    endtime = models.TimeField ()
-    state = models.BooleanField(default=True)
-
 class Request(models.Model):
     idrequest = models.AutoField(primary_key=True)
     idcustomer = models.ForeignKey(Customer, on_delete=models.CASCADE, default='1')

@@ -50,25 +50,25 @@ class freelancerEditForm(forms.ModelForm):
                 ]
 
 
-class ScheduleForm(forms.ModelForm):
+# class ScheduleForm(forms.ModelForm):
 
-    class Meta:
-        model = Schedule
-        fields = {'date','startime','endtime'}
-        labels = {
-            "date": ("Fecha"),
-            "startime": ("Hora Inicio"),
-            "endtime": ("Hora Fin")
-        }
-        widgets = {
-            'date': forms.DateInput(
-                attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)', 'class': 'form-control'}
-            ),
-            'startime':forms.TimeInput(
-                attrs={'type': 'time', 'placeholder': 'H:M', 'class': 'form-control'}),
-            'endtime':forms.TimeInput(
-                attrs={'type': 'time', 'placeholder': 'H:M', 'class': 'form-control'}), 
-        }
+#     class Meta:
+#         model = Schedule
+#         fields = {'date','startime','endtime'}
+#         labels = {
+#             "date": ("Fecha"),
+#             "startime": ("Hora Inicio"),
+#             "endtime": ("Hora Fin")
+#         }
+#         widgets = {
+#             'date': forms.DateInput(
+#                 attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)', 'class': 'form-control'}
+#             ),
+#             'startime':forms.TimeInput(
+#                 attrs={'type': 'time', 'placeholder': 'H:M', 'class': 'form-control'}),
+#             'endtime':forms.TimeInput(
+#                 attrs={'type': 'time', 'placeholder': 'H:M', 'class': 'form-control'}), 
+#         }
 
 
 

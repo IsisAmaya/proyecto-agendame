@@ -12,8 +12,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Freelancer, User, Schedule, Neighborhood
-from .models import Schedule
+from .models import Freelancer, User, Neighborhood
 from django.http import JsonResponse
 import json
 from . forms import *
@@ -122,7 +121,10 @@ def logout_freelancer(request):
 
 @login_required
 def profile(request):
-    return render(request, "perfil.html")
+    user_id = request.user.id
+    freelancer = User.objects.filter(id=user_id).first()
+    print(user_id,freelancer)
+    return render(request, "perfil.html",{'freelancer': freelancer})
 
 
 @login_required
@@ -142,25 +144,25 @@ def update_profile(request):
     return render (request, "perfil.html")
 
 
-def schedule(request):
-    form = ScheduleForm()
-    return render(request, 'schedule.html', {'form': form})
+# def schedule(request):
+#     form = ScheduleForm()
+#     return render(request, 'schedule.html', {'form': form})
 
 
-def uploadschedule(request, idfreelancer):
-    if request.method == "POST":
-        form = ScheduleForm(request.POST)
-        if form.is_valid():
-            form.save()
+# def uploadschedule(request, idfreelancer):
+#     if request.method == "POST":
+#         form = ScheduleForm(request.POST)
+#         if form.is_valid():
+#             form.save()
             
-            messages.success(request, "El calendario fue guardado correctamente!!!")
-    else:
-        form = ScheduleForm()
-    schedules = Schedule.objects.filter(idfreelancer__icontains=idfreelancer)
-    return render(request, 'schedule.html', {'form': form,'schedules': schedules})
+#             messages.success(request, "El calendario fue guardado correctamente!!!")
+#     else:
+#         form = ScheduleForm()
+#     schedules = Schedule.objects.filter(idfreelancer__icontains=idfreelancer)
+#     return render(request, 'schedule.html', {'form': form,'schedules': schedules})
 
 
-def deleteSchedule(request, idschedule):
+# def deleteSchedule(request, idschedule):
     schedule = get_object_or_404(Schedule, pk=idschedule)
     # obtengo el idfreelancer
     idfreelancer = schedule.idfreelancer
@@ -214,6 +216,8 @@ def calendar(request):
     context = {
         "events":all_events,
     }
+    user_id = request.user.id
+    freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
     return render(request,'calendar.html',context)
 
 def all_events(request):  
@@ -265,3 +269,16 @@ def remove(request):
     event.delete()
     data = {}
     return JsonResponse(data)
+
+def request(request):
+    user_id = request.user.id
+    freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
+    freelancer_id = freelancer.pk
+    requests = Request.objects.filter(idfreelancer=freelancer_id)
+    return render(request, 'request.html',{'requests': requests})
+
+def updateRequest(request,idrequest):
+    # user_id = request.user.id
+    # freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
+    Request.objects.filter(pk=idrequest).update(state='Confirmado')
+    return redirect('/freelancer/request/')
