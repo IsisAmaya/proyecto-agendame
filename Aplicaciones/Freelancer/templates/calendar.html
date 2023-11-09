@@ -66,11 +66,20 @@
                     <br />
                     <br />
                     <h3>Por favor seleccione los horarios en los cuales estará disponible:</h3>
+                    <br />
+                    <h4>Instrucciones:
+                        <br />
+                        1.Si desea agendar la disponibilidad un dia de completo, de clic en el botón month y elija el día.
+                        <br />
+                        2.Para agendar por horas, seleccione las opciones week o day, arrastre el clic y suelte en la hora deseada.
+                        <br />
+                        3.Para eliminar, de un clic sostenido y se generará el mensaje de eliminación.
+                        <br />
+                    </h4>
                     <div id='calendar'><br></div>
                 </div>
 
 
-<<<<<<< HEAD
                 <script>
                     $(document).ready(function () {
                         var calendar = $('#calendar').fullCalendar({
@@ -167,105 +176,6 @@
                     });
 
                 </script>
-=======
-<script>
-   $(document).ready(function () {
-       var calendar = $('#calendar').fullCalendar({
-           header: {
-               left: 'prev,next today',
-               center: 'title',
-               right: 'month,agendaWeek,agendaDay'
-           },
-           events: 'all_events/',
-           selectable: true,
-           selectHelper: true,
-           editable: true,
-           eventLimit: true,
-           select: function (start, end, allDay) {
-               //var title = prompt("Ingrese el título del evento");
-               var title = "Disponible"
-               if (title) {
-                   var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                   var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-                   $.ajax({
-                       type: "GET",
-                       url: 'add_event/',
-                       data: {'title': title, 'start': start, 'end': end},
-                       dataType: "json",
-                       success: function (data) {
-                           calendar.fullCalendar('refetchEvents');
-                           alert("Guardado exitosamente");
-                       },
-                       error: function (data) {
-                           alert('Hubo un problema!!!');
-                       }
-                   });
-               }
-           },
-           eventResize: function (event) {
-               var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-               var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-               var title = event.title;
-               var id = event.id;
-               $.ajax({
-                   type: "GET",
-                   url: 'update/',
-                   data: {'title': title, 'start': start, 'end': end, 'id': id},
-                   dataType: "json",
-                   success: function (data) {
-                       calendar.fullCalendar('refetchEvents');
-                       alert('Evento actualizado');
-                   },
-                   error: function (data) {
-                       alert('Hubo un problema!!!');
-                   }
-               });
-           },
- 
-           eventDrop: function (event) {
-               var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-               var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-               var title = event.title;
-               var id = event.id;
-               $.ajax({
-                   type: "GET",
-                   url: 'update/',
-                   data: {'title': title, 'start': start, 'end': end, 'id': id},
-                   dataType: "json",
-                   success: function (data) {
-                       calendar.fullCalendar('refetchEvents');
-                       alert('Evento actualizado');
-                   },
-                   error: function (data) {
-                       alert('Hubo un problema!!!');
-                   }
-               });
-           },
- 
-           eventClick: function (event) {
-               if (confirm("Estás seguro de eliminarlo?")) {
-                   var id = event.id;
-                   $.ajax({
-                       type: "GET",
-                       url: 'remove/',
-                       data: {'id': id},
-                       dataType: "json",
-                       success: function (data) {
-                           calendar.fullCalendar('refetchEvents');
-                           alert('Evento eliminado');
-                       },
-                       error: function (data) {
-                           alert('Hubo un problema!!!');
-                       }
-                   });
-               }
-           },
- 
-       });
-   });
- 
-</script>
->>>>>>> 74fd72c97c65a042ec6ecd17dbeb77b4aa342118
 </body>
 
 </html>
