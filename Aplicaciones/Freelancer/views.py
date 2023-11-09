@@ -270,7 +270,9 @@ def remove(request):
     data = {}
     return JsonResponse(data)
 
-<<<<<<< HEAD
+def map(request):
+    return render(request, 'map.html')
+
 def request(request):
     user_id = request.user.id
     freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
@@ -283,8 +285,5 @@ def updateRequest(request,idrequest):
     # freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
     Request.objects.filter(pk=idrequest).update(state='Confirmado')
     return redirect('/freelancer/request/')
-=======
 
-def map(request):
-    return render(request, 'map.html')
->>>>>>> 74fd72c97c65a042ec6ecd17dbeb77b4aa342118
+
