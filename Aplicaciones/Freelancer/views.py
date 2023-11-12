@@ -11,22 +11,24 @@
 
 
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Freelancer, User, Neighborhood
 from django.http import JsonResponse
-import json
 from . forms import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Q
 import datetime
-from django.db.models.functions import TruncDate, ExtractHour,  ExtractMinute
+from django.db.models.functions import ExtractHour
 from django.db.models import Avg
+import folium
+import pandas as pd
+
 
 
 
@@ -270,9 +272,6 @@ def remove(request):
     data = {}
     return JsonResponse(data)
 
-def map(request):
-    return render(request, 'map.html')
-
 def request(request):
     user_id = request.user.id
     freelancer = Freelancer.objects.get(idfreelancer_id = user_id)
@@ -287,3 +286,24 @@ def updateRequest(request,idrequest):
     return redirect('/freelancer/request/')
 
 
+def map(request):
+    freelancers = Freelancer.objects.all()
+    
+    initialMap = folium.Map(location=[6.248254646019252, -75.55926609589447], zoom_start=13)
+    
+    for freelancer in freelancers:
+        perfil_url = reverse('detail', kwargs={'freelancer_id': freelancer.pk})
+        html_popup = f"""
+            <div>
+                <h4>{freelancer.name} {freelancer.lastname}</h4>
+                <p style="font-size: 13px;"><strong>Servicio:</strong> {freelancer.idservices}</p>
+                <p style="font-size: 13px;"><strong>Perfil:</strong> <a href="{perfil_url}" target="_blank">Enlace al perfil</a></p>
+            </div>
+        """
+        
+        coordinates = (freelancer.latitude, freelancer.length)
+        folium.Marker(coordinates, popup=html_popup).add_to(initialMap)
+    
+    
+    context = {'map': initialMap._repr_html_(), 'freelancers': freelancers}
+    return render(request, 'map.html', context)

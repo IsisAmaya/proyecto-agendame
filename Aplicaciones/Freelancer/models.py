@@ -52,6 +52,8 @@ class Freelancer(models.Model):
     idcountry = models.ForeignKey(Country, on_delete=models.CASCADE)
     idcity = models.ManyToManyField(City)
     idneighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
+    latitude = models.FloatField(default=0)
+    length = models.FloatField(default=0)
     address = models.CharField(max_length=300)
     description = models.TextField(default="")
     imageprofile =models.ImageField(upload_to='freelancer/images/', default= 'freelancer/images/default-avatar-profile.jpg')

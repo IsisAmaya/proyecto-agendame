@@ -1,29 +1,40 @@
-{% load leaflet_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <title>Mapa</title>
-    {% leaflet_js %}
-    {% leaflet_css %}
-    <style>
-        .leaflet-container { height: 100%; }
-    </style>
-    <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
-
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        
-        L.marker([51.5, -0.09]).addTo(map)
-            .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-            .openPopup();
-        </script>
 </head>
+
 <body>
-    <h1>Mushrooms Spots</h1>
-    {% leaflet_map "map" %}
+    <div class="row">
+        <nav class="navbar bg-body-tertiary ">
+            <div class="container ml-auto">
+                <a class="btn btn-outline-info " href="{% url 'home' %}">Regresar al Inicio</a>
+            </div>
+            
+        </nav>
+    </div>
+
+    <div class="container mt-3">    
+        <div class="row text-center">
+            <h1>Mapa de Freelancers</h1>
+        </div>
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    {{ map|safe }}
+                </div>
+            </div>
+        </div>    
+
+    </div>
+
+
+
 </body>
+
 </html>

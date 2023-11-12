@@ -50,10 +50,7 @@ INSTALLED_APPS = [
     'Aplicaciones.Customer',
     'crispy_forms',
     "crispy_bootstrap5",
-    'bootstrap_datepicker_plus',
-    'django.contrib.gis',
-    'leaflet',
-    
+    'bootstrap_datepicker_plus', 
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
