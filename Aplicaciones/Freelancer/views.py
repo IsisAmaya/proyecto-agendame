@@ -183,7 +183,7 @@ def filter_category(request, category):
     return render(request, 'home.html', {'filter_services': filter_category})
 
 def inicio(request):
-    return render(request, 'inicio.html')
+    return render(request, 'Inicio.html')
 
 
 
