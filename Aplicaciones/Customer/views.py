@@ -172,24 +172,23 @@ def logout_customer(request):
 @login_required
 def profile_(request):
     user_id = request.user.id
-    user = User.objects.get(id=user_id)
-    if user.groups.filter(name='Customers').exists():
-        return render(request, "profile_.html")
-    elif user.groups.filter(name='Freelancers').exists():
-        url = reverse('profile') 
-        return HttpResponseRedirect(url)
+    customer = Customer.objects.get(idcustomer_id=user_id)
+    #customer = User.objects.get(id=user_id)
+    print(user_id,customer)
+    return render(request, "profile_.html",{'customer': customer})
 
 
 @login_required
-def edit_profile(request):
+def edit_profile_(request):
     user_id = request.user.id
-    customer = User.objects.filter(id=user_id).first()
+    customer = Customer.objects.get(idcustomer_id=user_id)
     form = customerEditForm(instance=customer)
     return render(request, 'edit-profile_.html', {"form":form, 'customer': customer})
 
 
 def update_profile_(request):
-    customer = request.user.customer
+    user_id = request.user.id
+    customer = Customer.objects.get(idcustomer_id=user_id)
     form = customerEditForm(request.POST, request.FILES, instance=customer)
     if form.is_valid():
         form.save()

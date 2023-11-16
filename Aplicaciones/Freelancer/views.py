@@ -182,6 +182,9 @@ def filter_category(request, category):
     filter_category = Freelancer.objects.filter(category=category)
     return render(request, 'home.html', {'filter_services': filter_category})
 
+def inicio(request):
+    return render(request, 'inicio.html')
+
 
 
 def analitic(request):
@@ -307,3 +310,5 @@ def map(request):
     
     context = {'map': initialMap._repr_html_(), 'freelancers': freelancers}
     return render(request, 'map.html', context)
+
+home

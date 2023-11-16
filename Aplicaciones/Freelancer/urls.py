@@ -24,4 +24,6 @@ urlpatterns = [
     path('map/', views.map, name="map"),
     path('request/', views.request, name='request'),
     path('request/<int:idrequest>/update', views.updateRequest, name="updateRequest"),
+    path('inicio/', views.inicio, name='inicio'),
 ]
+

@@ -25,7 +25,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', freelancerviews.home, name="home"),
+    path('', freelancerviews.inicio, name="inicio"),
+    path('servicios/', freelancerviews.home, name="home"),
     path('freelancer/', include('Aplicaciones.Freelancer.urls')),
     path('customer/', include('Aplicaciones.Customer.urls')),
 ]

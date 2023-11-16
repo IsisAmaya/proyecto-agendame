@@ -39,6 +39,11 @@
                     <i class="bi bi-box-arrow-left"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Regresar</span>
                 </a>
             </li>
+            <li class="nav-item py-2 py-sm-0">
+                <a href="{% url 'logout' %}" class="nav-link text-black">
+                    <i class="bi bi-box-arrow-left"></i><span class="fs-4 ms-3 d-none d-sm-inline fw-bold">Salir</span>
+                </a>
+            </li>
             </ul>
         </div>
         </div>
@@ -50,19 +55,19 @@
 
                 <div class="col-3" >
 
-                    {% if user.customer.imageprofile %}
+                    {% if customer.imageprofile %}
         
-                    <img src="{{ user.customer.imageprofile.url }}" alt="Foto de perfil de {{ user.customer.name }}" width="200"  > 
+                    <img src="{{ customer.imageprofile.url }}" alt="Foto de perfil de {{ customer.name }}" width="200"  > 
         
                     {% else %}
                     <p>No hay foto de perfil disponible.</p>
                     {% endif %}
         
-                </div>
+                </div> 
     
                 <div class="col-5 text-left my-auto">
     
-                    <h1> {{ user.customer.name }} {{ user.customer.lastname }}  </h1>
+                    <h1> {{ customer.name }} {{ customer.lastname }}  </h1>
     
                 </div>
         

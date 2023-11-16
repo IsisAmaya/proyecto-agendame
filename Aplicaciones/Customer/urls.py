@@ -11,7 +11,7 @@ urlpatterns = [
     path('login_/', views.login_customer_, name="login"),
     path('logout/', views.logout_customer, name="logout"),
     path('profile_/', views.profile_, name="profile_"),
-    path('profile/edit/', views.edit_profile, name="edit_profile_"),
+    path('profile/edit/', views.edit_profile_, name="edit_profile_"),
     path('profile/update/', views.update_profile_, name="update_profile_"),
     ##path('<int:freelancer_id>', views.detail, name='detail'),
 ]

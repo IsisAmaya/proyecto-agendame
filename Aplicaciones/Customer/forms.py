@@ -64,10 +64,9 @@ class CustomUserCreationForm(UserCreationForm):
 
 class customerEditForm(forms.ModelForm):
     phone = forms.IntegerField(label="Numero de telefono")
-    idcity = forms.ModelMultipleChoiceField(queryset=City.objects.all(), label="Ciudades", required=False)
-    description = forms.CharField(max_length=1000, required=False, widget=forms.Textarea(), label="Descripción")
+    idcity = forms.ModelChoiceField(queryset=City.objects.all(), label="Ciudad", required=False)
     imageprofile = forms.ImageField(required=False, label="Imagen de perfil")
-    imagejobs = forms.ImageField(required=False, label = "Fotos de trabajos previos")
+
 
     
     
